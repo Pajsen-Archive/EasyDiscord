@@ -1,5 +1,5 @@
 {
-  "name": "easy-discord",
+  "name": "easy-discord-js",
   "version": "1.1.1",
   "description": "A easy discord.js wrapper. Make a bot quick and easy.",
   "main": "index.js",
