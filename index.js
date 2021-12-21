@@ -1,32 +1,24 @@
-const chalk = require("chalk");
 const Discord = require("discord.js")
-const client = new Discord.client();
+const client = new Discord.Client();
 const chalkAnimation = require('chalkercli');
 const log = console.log;
 let token = "";
-function User(name) {
-  // this = {};  (implicitly)
+let prefix = "!";
 
-  // add properties to this
-  this.name = name;
-  this.isAdmin = false;
-
-  // return this;  (implicitly)
+exports.config = function(options) {
+  return console.log("This feature is coming in version 1.1.2 (next version)");
 }
 
-const Discord = require("discord.js");
-const client = new Discord.Client();
-
-exports.run = function (options) {
+exports.start = function (options) {
   var opts = options || {};
   token = opts.token;
   const status = opts.status || null;
-  const prefix = opts.prefix|| null;
+  prefix = opts.prefix || "!";
   let statType = opts.statusType;
   if (statType === null) return statType = "WATCHING";
-  if (token === null) return log(chalk.red("No token was provided! Make sure you have provided a token or create one at https://discord.dev/")
-  if (status === null) return log(chalk.red("No status was provided. Not using one"))
-  if (prefix === null) return log(chalk.red("No prefix was provided, using defualt '!'"))
+  if (token === null) return log("No token was provided! Make sure you have provided a token or create one at https://discord.dev/")
+  if (status === null) return log("No status was provided. Not using one")
+  if (prefix === null) return log("No prefix was provided, using defualt '!'")
   client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
     if (status !== null) return client.user.setActivity(status, { type: statType, });
@@ -35,28 +27,20 @@ exports.run = function (options) {
   if (token !== null) return client.login(token);
 };
 
-exports.add = function (name, output, TranslateToLower = true) {
-  const TranslateToLower = true;
+exports.add = function (options) {
   const opts = options;
   this.name = opts.name;
   this.output = opts.output; 
-  client.on("messageCreate", async function (message) => {
-    if (TranslateToLower == true) {
-      if (message.content.toLowerCase() === this.name.toLowerCase()) {
-        await message.channel.send(this.output);
+  const name = this.name;
+  const output = this.output
+  this.command = function() {
+  client.on("message", async function (message) {
+      let command = message.content.split(" ")[0];
+      if (command.toLowerCase() === name) {
+        await message.channel.send(output);
       }
-    } else {
-      if (message.content === name) {
-        await message.channel.send(this.output);
-      }
-    }
-  });
-};
 
-exports.status = function (Type = 1, Txt) {
-  client.on("ready", () => {
-    client.user.setActivity(Txt, {
-      type: Type,
-    });
   });
+  }
+
 };
