@@ -40,14 +40,14 @@ exports.add = function (name, output, TranslateToLower = true) {
   const opts = options;
   this.name = opts.name;
   this.output = opts.output; 
-  client.on("messageCreate", (message) => {
+  client.on("messageCreate", async function (message) => {
     if (TranslateToLower == true) {
       if (message.content.toLowerCase() === this.name.toLowerCase()) {
-        message.channel.send(this.output);
+        await message.channel.send(this.output);
       }
     } else {
       if (message.content === name) {
-        message.channel.send(this.output);
+        await message.channel.send(this.output);
       }
     }
   });
