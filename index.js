@@ -6,7 +6,7 @@ let token = "";
 let prefix = "!";
 
 exports.config = function(options) {
-  return console.log("This feature is coming in version 1.1.2 (next version)");
+  return console.log("This feature is coming in version 1.1.2 (next version).");
 }
 
 exports.start = function (options) {
